@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  CustomersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Customers
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  CustomerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/handlers/index.handler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Environment:
+        Variables:
+          CUSTOMERS_TABLE: !Ref CustomersTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CustomersTable
+      Events:
+        CreateCustomer:
+          Type: Api
+          Properties:
+            Path: /customers
+            Method: POST
+        GetCustomer:
+          Type: Api
+          Properties:
+            Path: /customers/{id}
+            Method: GET
+        UpdateCustomer:
+          Type: Api
+          Properties:
+            Path: /customers/{id}
+            Method: PUT
+        DeleteCustomer:
+          Type: Api
+          Properties:
+            Path: /customers/{id}
+            Method: DELETE
+        ListCustomers:
+          Type: Api
+          Properties:
+            Path: /customers
+            Method: GET
+
+Outputs:
+  ApiUrl:
+    Description: API Gateway endpoint URL
+    Value: !Sub https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
