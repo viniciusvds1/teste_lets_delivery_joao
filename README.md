@@ -34,18 +34,22 @@ src/
    ```bash
    npm install
    ```
-
-2. Start local DynamoDB:
+2. EXPORT variables:
+   ```bash
+   export AWS_ACCESS_KEY_ID=fakeMyKeyId
+   export AWS_SECRET_ACCESS_KEY=fakeSecretKey
+   ```
+3. Start local DynamoDB:
    ```bash
    npm run start:dynamodb
    ```
 
-3. Run tests:
+4. Run tests:
    ```bash
    npm test
    ```
 
-4. Run test coverage:
+5. Run test coverage:
    ```bash
    npm run test:coverage
    ```
