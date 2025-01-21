@@ -8,7 +8,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "start:dynamodb": "docker run -d -p 8000:8000 amazon/dynamodb-local",
-    "dev": "ts-node-dev --inspect --respawn --transpile-only src/local/server.ts"
+    "dev": "ts-node-dev --inspect --respawn --transpile-only /home/joaosilva/teste_lets_delivery_joao/src/local/server.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.x",
